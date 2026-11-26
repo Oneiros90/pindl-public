@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="theme-color" content="#f5f3ef" />
+		<script>
+			// The theme is decided before the first paint: the reader's choice, or the system's.
+			(function () {
+				var theme = null;
+				try {
+					theme = JSON.parse(localStorage.getItem('pindl:theme'));
+				} catch (e) {}
+				if (theme !== 'light' && theme !== 'dark') {
+					theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				}
+				document.documentElement.dataset.theme = theme;
+				// The language, before the first paint: the reader's choice, or the device's (see lib/locale.svelte.ts).
+				var lang = null;
+				try {
+					lang = (JSON.parse(localStorage.getItem('pindl:prefs')) || {}).language;
+				} catch (e) {}
+				if (lang !== 'en' && lang !== 'it') {
+					lang = 'en';
+					var tags = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+					for (var i = 0; i < tags.length; i++) {
+						var base = String(tags[i] || '').toLowerCase().split('-')[0];
+						if (base === 'en' || base === 'it') {
+							lang = base;
+							break;
+						}
+					}
+				}
+				document.documentElement.lang = lang;
+				// Safari on iOS, in a tab: the map bleeds behind the bars (see lib/bleed.ts).
+				var standalone = navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+				if (window.CSS && CSS.supports('-webkit-touch-callout', 'none') && !standalone) {
+					document.documentElement.classList.add('ios-bleed');
+				}
+			})();
+		</script>
+		<meta name="description" content="Pindl: the neighbourhood noticeboard, on a map. Look without signing up, post in ten seconds, no advertising." />
+		<link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+		<title>Pindl — the neighbourhood noticeboard, on a map</title>
+		<link href="./_app/immutable/entry/start.C-kfqk8r.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/payload.DSmR2FwN.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DclECHGd.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CKXDpVev.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CA9W9IIM.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/D_9dvEKF.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/9ezr_mnC.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.D1atqFyb.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/0.CVR5d-cY.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/D4jJhDcs.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/2.1fWKd9B8.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BAO5SMTB.js" rel="modulepreload">
+		
+		<link href="./_app/immutable/assets/0.6G4WcO7w.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.DMIeSd9_.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/MapView.BQGa5T64.css" rel="stylesheet">
+	</head>
+	<body>
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_10ixpnb = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						version: "1795731967151",
+						assets: "/pindl-public"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					import("./_app/immutable/entry/start.C-kfqk8r.js").then(async (kit) => {
+						kit.init(__sveltekit_10ixpnb);
+						const app = await import("./_app/immutable/entry/app.D1atqFyb.js");
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
